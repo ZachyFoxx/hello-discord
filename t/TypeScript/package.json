@@ -1,0 +1,18 @@
+{
+  "name": "hello-discord",
+  "version": "0.1.0",
+  "description": "A moderation Discord bot built in TypeScript",
+  "main": "index.js",
+  "author": "ZachyFoxx",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.22",
+    "discord.js": "^12.5.1",
+    "dotenv": "^10.0.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
