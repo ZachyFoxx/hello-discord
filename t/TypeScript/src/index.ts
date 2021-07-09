@@ -1,4 +1,6 @@
 import { Client } from "./Client";
+import { BanCommand } from "./commands/BanCommand";
+import { KickCommand } from "./commands/KickCommand";
 import { PingCommand } from "./commands/PingCommand";
 require("dotenv").config();
 
@@ -9,4 +11,8 @@ const client = new Client();
 client.login(process.env.TOKEN);
 
 // Register our commands
-client.registerCommands(new PingCommand(client, "ping"));
+client.registerCommands(
+	new PingCommand(client, "ping"),
+	new KickCommand(client, "kick"),
+	new BanCommand(client, "ban")
+);
