@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://m2.dv8tion.net/releases"
+    }
+}
+
+dependencies {
+    // java deps
+    compileOnly "org.projectlombok:lombok:1.18.12"
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    implementation "net.dv8tion:JDA:4.3.0_277"
+}
+
+application {
+    mainClassName = 'sh.foxboy.HelloDiscord'
+}
+
+tasks.build.dependsOn tasks.shadowJar
+
+shadowJar {
+  archiveClassifier.set("")
+  minimize()
+}
