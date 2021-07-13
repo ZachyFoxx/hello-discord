@@ -4,8 +4,9 @@ A moderation Discord bot in every computer language.
 
 Inspired by [this repo](https://github.com/leachim6/hello-world)!
 
-# Languages (3 Total)
+# Languages (4 Total)
 
 -   TypeScript
 -   Java
 -   JavaScript
+-   Python
