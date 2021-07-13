@@ -19,6 +19,7 @@ $discord->on('ready', function ($discord) {
     // Listen for messages.
     $discord->on('message', function ($message, $discord) {
         $prefix = $GLOBALS['prefix']; // what even is this? it's the meaning of life, the universe, and everything; 42
+        $guild = $discord->guilds->get('id', $message->guild_id);
 
         echo "{$message->author->username}: {$message->content}",PHP_EOL;
 
@@ -34,40 +35,62 @@ $discord->on('ready', function ($discord) {
         
         // get arguments from message
         $args = explode(" ", $message->content);
-        $command = substr($args[0], -strlen($prefix)-1, strlen($prefix)+1);
+        $command = substr($args[0], strlen($prefix));
         $args = array_slice($args, strlen($prefix));
+
+        echo $command,PHP_EOL;
 
         // ping command
         if ($command === 'ping') {
           // reply with Pong! and message arguments
-          $message->reply("Pong! ${implode("", $args)}");
+          $message->reply("Pong! ${implode(" ", $args)}");
+        }
+
+        // ban command
+        if ($command === 'ban') {
+          $mentioned = $message->mentions->first();
+          $id = $mentioned->id ?: "";
+          
+          $guild->members->fetch($id)->done(
+            function ($member) use ($guild, $message) {
+              $member->ban(0, implode(" ", $args))->done(
+              function () use ($message, $member) {
+                $message->reply("Banned {$member->username}!");
+                },
+                function ($error) use ($message) {
+                  $message->reply("I do not have the required permissions to ban this user!");
+                }
+              );
+            },
+            function ($error) use ($message) {
+              $message->reply("Please mention a member to ban!");
+              return;
+            }
+          );
         }
 
         // kick command
         if ($command === 'kick') {
+          $mentioned = $message->mentions->first();
+          $id = $mentioned->id ?: "";
+
           // get first mentioned member from collection from message
-          $member = $message->mentions->first();
-          if ($member == null) {
-            $message->reply("Please mention a member to kick!");
-            return;
-          }
-
-          try {
-            echo $member->username;
-            $guild = $discord->guilds->get($message->channel->guild->id,null);
-
-            // this changes member from the mentioned member to the bot???
-            // TODO: fix this shit it's 2:30 and I want to go to sleep.
-            $member = $guild->members->get($member, null);
-
-            echo $member->username;
-
-            $guild->members->kick($member);
-            $message->reply("Kicked {$member->username}!");
-
-          } catch (Exception $e) {
-              $message->reply("Failed to kick {$member->username}!");
-          }
+          $guild->members->fetch($id)->done(
+          function ($member) use ($guild, $message) {
+              $guild->members->kick($member)->done(
+                function () use ($message, $member) {
+                  $message->reply("Kicked {$member->username}!");
+                },
+                function ($error) use ($message) {
+                  $message->reply("I do not have the required permissions to kick this user!");
+                }
+              );
+            },
+            function ($error) use ($message) {
+              $message->reply("Please mention a member to kick!");
+              return;
+            }
+          );
         }
 
     });
