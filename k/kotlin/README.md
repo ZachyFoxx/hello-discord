@@ -1,6 +1,6 @@
-# Hello Discord (Java Edition)
+# Hello Discord (Kotlin Edition)
 
-A moderation Discord bot built in Java
+A moderation Discord bot built in Kotlin
 
 ## Building
 
@@ -12,7 +12,7 @@ A moderation Discord bot built in Java
 
 ### Windows, MacOS, & Linux
 
-> -   put your bot token in the `.config` file
+> -   put your bot token in the `.env` file
 
 ## Running
 
