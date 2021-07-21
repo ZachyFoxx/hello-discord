@@ -13,5 +13,5 @@ abstract class Command(name: String) {
      * @param commandLabel command used
      * @param args         The arguments received
      */
-    abstract fun execute(message: Message?, commandLabel: String?, args: Array<String?>?)
+    abstract fun execute(message: Message, commandLabel: String, args: Array<String?>?)
 }

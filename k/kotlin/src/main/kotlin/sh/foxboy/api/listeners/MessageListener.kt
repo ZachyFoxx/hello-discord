@@ -8,6 +8,9 @@ import sh.foxboy.api.command.CommandMap
 class MessageListener(private val commandMap: CommandMap) : ListenerAdapter() {
 
     override fun onMessageReceived(event: MessageReceivedEvent) {
-        event.message.reply("Hello!")
+        if (!event.message.author.isBot)
+            println("Received message \"${event.message.contentRaw}\"")
+
+        commandMap.handleCommand(event.message)
     }
 }
