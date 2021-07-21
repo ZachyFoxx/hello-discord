@@ -12,7 +12,7 @@ A moderation Discord bot built in Java
 
 ### Windows, MacOS, & Linux
 
-> -   put your bot token in the `.cofig` file
+> -   put your bot token in the `.env` file
 
 ## Running
 
